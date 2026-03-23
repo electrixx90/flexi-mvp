@@ -100,7 +100,7 @@ export default function MembershipDetail() {
                 Based on remaining value and market demand, you could list this for up to <span className="font-bold text-accent">€{Math.round(m.residualValue * 0.9)}</span>.
               </p>
               <Button variant="mint" size="sm" className="mt-3" asChild>
-                <Link to={`/sell?id=${m.id}`}>
+                <Link to={`/client/sell?id=${m.id}`}>
                   <Tag className="h-3.5 w-3.5" /> Create Listing
                 </Link>
               </Button>
@@ -136,11 +136,9 @@ export default function MembershipDetail() {
         <Button variant="default" size="lg" onClick={() => setPassOpen(true)}>
           <QrCode className="h-4 w-4" /> Show Pass
         </Button>
-        <Button variant="default" size="lg" asChild>
-          <Link to={`/sell?id=${m.id}`}><Tag className="h-4 w-4" /> Sell This Membership</Link>
+        <Button variant="outline" size="lg" asChild>
+          <Link to={`/client/sell?id=${m.id}`}><Tag className="h-4 w-4" /> Sell This Membership</Link>
         </Button>
-        <Button variant="outline" size="lg"><Send className="h-4 w-4" /> Transfer</Button>
-        <Button variant="ghost" size="lg"><Zap className="h-4 w-4" /> Use Now</Button>
       </motion.div>
 
       <MembershipPassDialog membership={m} open={passOpen} onOpenChange={setPassOpen} />

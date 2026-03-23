@@ -23,7 +23,7 @@ import {
   LayoutDashboard,
   ScanLine,
 } from "lucide-react";
-import heroVisual from "@/assets/landing2-hero-visual.png";
+import heroVisual from "@/assets/hero-visual.png";
 import logoRect from "@/assets/logo_rect.png";
 import logoSymbol from "@/assets/logo_symbol.png";
 import { Link } from "react-router-dom";
@@ -47,7 +47,7 @@ function LandingNav() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/50">
       <div className="container mx-auto px-6 lg:px-12 flex items-center justify-between h-16">
-        <Link to="/landing-4" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <img src={logoRect} alt="Flexi" className="h-8" />
         </Link>
         <div className="hidden md:flex items-center gap-8">
@@ -77,10 +77,6 @@ function HeroSection() {
 
       <div className="container mx-auto px-6 lg:px-12 py-24 grid lg:grid-cols-2 gap-16 items-center relative z-10">
         <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-2xl">
-          <motion.p custom={0} variants={fadeUp} className="text-sm font-semibold tracking-[0.2em] uppercase text-primary mb-6">
-            A new category
-          </motion.p>
-
           <motion.h1 custom={1} variants={fadeUp} className="font-display text-5xl sm:text-6xl lg:text-[4.25rem] font-extrabold leading-[1.08] tracking-tight text-secondary mb-6">
             The rigid membership model{" "}
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
@@ -487,7 +483,7 @@ function FinalCTASection() {
               <Button size="lg" className="bg-primary-foreground text-secondary hover:bg-primary-foreground/90 text-base px-8 font-bold shadow-elevated" asChild>
                 <Link to="/join">Join as a venue <ArrowRight className="ml-1 h-5 w-5" /></Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 text-base px-8" asChild>
+              <Button variant="outline" size="lg" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/90 text-base px-8 bg-transparent" asChild>
                 <Link to="/contact">Talk to our team</Link>
               </Button>
             </div>

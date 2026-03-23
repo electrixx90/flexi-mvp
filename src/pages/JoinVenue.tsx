@@ -84,10 +84,10 @@ export default function JoinVenue() {
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/50">
         <div className="container mx-auto px-6 lg:px-12 flex items-center justify-between h-16">
-          <Link to="/landing-4" className="flex items-center">
+          <Link to="/" className="flex items-center">
             <img src={logoRect} alt="Flexi" className="h-8" />
           </Link>
-          <Link to="/landing-4" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <Link to="/" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
             <ArrowLeft className="h-4 w-4" /> Back to homepage
           </Link>
         </div>
@@ -116,7 +116,7 @@ export default function JoinVenue() {
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Button variant="hero" size="lg" asChild>
-                  <Link to="/landing-4">Back to homepage</Link>
+                  <Link to="/">Back to homepage</Link>
                 </Button>
                 <Button variant="outline" size="lg" asChild>
                   <Link to="/contact">Talk to our team</Link>

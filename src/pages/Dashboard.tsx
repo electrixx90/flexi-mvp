@@ -57,7 +57,7 @@ export default function Dashboard() {
       </motion.div>
 
       {/* Stats */}
-      <motion.div variants={item} className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      {/*<motion.div variants={item} className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat) => (
           <div key={stat.label} className="rounded-2xl bg-card p-5 shadow-card hover:shadow-elevated transition-shadow group">
             <div className={`h-10 w-10 rounded-xl bg-muted/50 flex items-center justify-center mb-3 ${stat.color} group-hover:scale-105 transition-transform`}>
@@ -67,7 +67,7 @@ export default function Dashboard() {
             <p className="text-xs text-muted-foreground mt-0.5">{stat.label}</p>
           </div>
         ))}
-      </motion.div>
+      </motion.div>*/}
 
       {/* My Memberships */}
       <motion.div variants={item}>

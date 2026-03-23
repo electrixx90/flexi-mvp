@@ -6,14 +6,43 @@ import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { nearbyListings, NearbyListing, categoryIcons, categoryLabels } from "@/data/nearbyListings";
+import { walletData, type MarketplaceListing } from "@/data/mockData";
 import { NearbyMembershipMap } from "@/components/nearby/NearbyMembershipMap";
 import { NearbyListingCard } from "@/components/nearby/NearbyListingCard";
+import { PurchaseDialog } from "@/components/marketplace/PurchaseDialog";
 
 type SortOption = 'nearest' | 'best-deal' | 'newest';
 type SourceFilter = 'all' | 'venue' | 'resale';
 type GeoState = 'idle' | 'requesting' | 'granted' | 'denied';
 
 const categories = ['gym', 'bjj', 'dance', 'wellness', 'yoga'] as const;
+
+const toMarketplaceListing = (listing: NearbyListing): MarketplaceListing => {
+  const validUntil = new Date(`${listing.validUntil}T23:59:59`);
+  const remainingDays = Number.isNaN(validUntil.getTime())
+    ? 0
+    : Math.max(0, Math.ceil((validUntil.getTime() - Date.now()) / 86400000));
+
+  return {
+    id: listing.id,
+    venue: listing.venueName,
+    type: listing.passType,
+    category: listing.category,
+    source: listing.source,
+    originalPrice: listing.originalPrice,
+    resalePrice: listing.price,
+    savings: listing.originalPrice - listing.price,
+    remainingDays,
+    remainingEntries: listing.remainingEntries,
+    totalEntries: listing.remainingEntries,
+    sellerRating: listing.sellerRating,
+    sellerName: listing.source === 'venue' ? listing.venueName : 'Marketplace Seller',
+    sellerVerified: listing.verified,
+    location: listing.location,
+    imageGradient: listing.imageGradient,
+    urgent: listing.highlight === 'ending-soon',
+  };
+};
 
 export default function NearbyMap() {
   const isMobile = useIsMobile();
@@ -35,6 +64,10 @@ export default function NearbyMap() {
 
   // Selection
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedListing, setSelectedListing] = useState<MarketplaceListing | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [walletBalance, setWalletBalance] = useState(walletData.balance);
+  const [purchasedIds, setPurchasedIds] = useState<Set<string>>(new Set());
 
   // Mobile bottom sheet
   const [sheetExpanded, setSheetExpanded] = useState(false);
@@ -95,6 +128,7 @@ export default function NearbyMap() {
   // Filtered listings
   const filtered = useMemo(() => {
     let list = [...nearbyListings];
+    list = list.filter((listing) => !purchasedIds.has(listing.id));
     if (selectedCategories.length) list = list.filter(l => selectedCategories.includes(l.category));
     if (verifiedOnly) list = list.filter(l => l.verified);
     if (sourceFilter !== 'all') list = list.filter(l => l.source === sourceFilter);
@@ -104,7 +138,19 @@ export default function NearbyMap() {
     if (sortBy === 'best-deal') list.sort((a, b) => (b.originalPrice - b.price) - (a.originalPrice - a.price));
     if (sortBy === 'newest') list.sort((a, b) => (a.highlight === 'new' ? -1 : 1));
     return list;
-  }, [selectedCategories, verifiedOnly, sourceFilter, maxDistance, priceRange, sortBy]);
+  }, [maxDistance, priceRange, purchasedIds, selectedCategories, sortBy, sourceFilter, verifiedOnly]);
+
+  const handleOpenPurchase = useCallback((listing: NearbyListing) => {
+    setSelectedId(listing.id);
+    setSelectedListing(toMarketplaceListing(listing));
+    setDialogOpen(true);
+  }, []);
+
+  const handlePurchaseComplete = useCallback((listing: MarketplaceListing, walletUsed: number) => {
+    setWalletBalance((prev) => Math.max(0, prev - walletUsed));
+    setPurchasedIds((prev) => new Set(prev).add(listing.id));
+    setSelectedId((prev) => (prev === listing.id ? null : prev));
+  }, []);
 
   const toggleCategory = (cat: string) => {
     setSelectedCategories(prev => prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat]);
@@ -282,6 +328,7 @@ export default function NearbyMap() {
               center={mapCenter}
               selectedId={selectedId}
               onSelect={setSelectedId}
+              onPurchase={handleOpenPurchase}
               onMoveEnd={() => setMapMoved(true)}
             />
           )}
@@ -377,6 +424,14 @@ export default function NearbyMap() {
           </motion.div>
         )}
       </div>
+
+      <PurchaseDialog
+        listing={selectedListing}
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        walletBalance={walletBalance}
+        onPurchaseComplete={handlePurchaseComplete}
+      />
     </div>
   );
 }

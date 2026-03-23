@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { NearbyListing, categoryIcons } from "@/data/nearbyListings";
@@ -9,6 +9,7 @@ interface Props {
   center: [number, number];
   selectedId: string | null;
   onSelect: (id: string | null) => void;
+  onPurchase: (listing: NearbyListing) => void;
   onMoveEnd: () => void;
 }
 
@@ -123,7 +124,7 @@ function buildSinglePopup(listing: NearbyListing): string {
     : '';
 
   return `
-    <div style="min-width:220px;max-width:260px;font-family:'Plus Jakarta Sans',Inter,system-ui,sans-serif;padding:4px 0">
+    <div data-listing-id="${listing.id}" style="min-width:220px;max-width:260px;font-family:'Plus Jakarta Sans',Inter,system-ui,sans-serif;padding:4px 0;cursor:pointer">
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
         <span style="font-size:18px">${categoryIcons[listing.category] || '📍'}</span>
         <div style="flex:1;min-width:0">
@@ -145,6 +146,9 @@ function buildSinglePopup(listing: NearbyListing): string {
         <span style="font-size:11px;color:#64748b">★ ${listing.sellerRating}</span>
         ${listing.verified ? '<span style="font-size:10px;font-weight:600;color:hsl(172 66% 50%)">✓ Verified</span>' : ''}
         <span style="margin-left:auto;font-size:11px;color:#94a3b8">Valid until ${listing.validUntil}</span>
+      </div>
+      <div style="margin-top:8px;padding-top:8px;border-top:1px solid hsl(214 32% 91%);font-size:11px;font-weight:700;color:hsl(239 84% 67%);text-align:center">
+        Click to review and purchase
       </div>
     </div>
   `;
@@ -217,7 +221,7 @@ function buildClusterPopup(group: NearbyListing[]): string {
   `;
 }
 
-export function NearbyMembershipMap({ listings, userPos, center, selectedId, onSelect, onMoveEnd }: Props) {
+export function NearbyMembershipMap({ listings, userPos, center, selectedId, onSelect, onPurchase, onMoveEnd }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const markersRef = useRef<Map<string, L.Marker>>(new Map());
@@ -311,19 +315,24 @@ export function NearbyMembershipMap({ listings, userPos, center, selectedId, onS
         onSelect(first.id);
       });
 
-      // For cluster popups, attach click handlers to individual items after popup opens
-      if (isCluster) {
-        marker.on('popupopen', () => {
-          group.forEach(listing => {
-            const el = document.querySelector(`[data-listing-id="${listing.id}"]`);
-            if (el) {
-              el.addEventListener('click', () => {
-                onSelect(listing.id);
-              });
-            }
-          });
+      marker.on('popupopen', () => {
+        const popupElement = marker.getPopup()?.getElement();
+        if (!popupElement) return;
+
+        popupElement.querySelectorAll<HTMLElement>('[data-listing-id]').forEach((element) => {
+          element.onclick = (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const listingId = element.dataset.listingId;
+            const clickedListing = group.find((listing) => listing.id === listingId);
+            if (!clickedListing) return;
+
+            onSelect(clickedListing.id);
+            onPurchase(clickedListing);
+          };
         });
-      }
+      });
 
       if (isSelected) {
         marker.openPopup();
@@ -332,7 +341,7 @@ export function NearbyMembershipMap({ listings, userPos, center, selectedId, onS
       // Store marker for all IDs in the group
       groupIds.forEach(id => markersRef.current.set(id, marker));
     });
-  }, [listings, selectedId, onSelect]);
+  }, [listings, selectedId, onPurchase, onSelect]);
 
   return <div ref={containerRef} className="h-full w-full" />;
 }

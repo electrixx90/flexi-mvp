@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { venueInfo, venueMemberships, type VenueMembership } from "@/data/venueData";
 import { VenuePublicPurchaseDialog } from "@/components/venue/VenuePublicPurchaseDialog";
+import logoRect from "@/assets/logo_rect.png";
+import logoSymbol from "@/assets/logo_symbol.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -36,10 +38,7 @@ export default function VenuePublicPage() {
       <nav className="sticky top-0 z-50 glass border-b border-border/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg gradient-hero flex items-center justify-center shadow-glow-indigo">
-              <Zap className="h-4 w-4 text-primary-foreground" />
-            </div>
-            <span className="font-display font-extrabold text-foreground">Flexi</span>
+            <img src={logoRect} alt="Flexi" className="h-8"/>
           </Link>
           <div className="flex items-center gap-3">
             <Button variant="ghost" size="sm" asChild>
@@ -101,7 +100,7 @@ export default function VenuePublicPage() {
                   <Sparkles className="h-4 w-4" /> Browse Memberships
                 </a>
               </Button>
-              <Button size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10" asChild>
+              <Button size="lg" variant="outline" className="bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/90" asChild>
                 <a href="#about">Learn More</a>
               </Button>
             </motion.div>
@@ -355,8 +354,8 @@ export default function VenuePublicPage() {
       <footer className="border-t border-border/50 py-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="h-6 w-6 rounded-md gradient-hero flex items-center justify-center">
-              <Zap className="h-3 w-3 text-primary-foreground" />
+            <div className="h-6 w-6 rounded-md flex items-center justify-center">
+              <img src={logoSymbol} alt="Flexi" className="h-8"/>
             </div>
             <span className="text-sm font-display font-bold text-muted-foreground">Powered by Flexi</span>
           </div>

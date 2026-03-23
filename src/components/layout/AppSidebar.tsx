@@ -43,10 +43,11 @@ export function AppSidebar({ collapsed, onToggle }: AppSidebarProps) {
     >
       {/* Logo */}
       <div className="flex h-16 items-center px-4 gap-2">
-        <img src={logoSymbol} alt="Flexi" className="h-9 w-9 shrink-0 object-contain" />
         {!collapsed && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <img src={logoRect} alt="Flexi" className="h-6" />
+            <a href="/">
+              <img src={logoRect} alt="Flexi" className="h-8"/>
+            </a>
           </motion.div>
         )}
       </div>

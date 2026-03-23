@@ -54,7 +54,7 @@ export default function VenueSettings() {
             </div>
           </div>
 
-          <div className="rounded-xl bg-card border border-border/50 p-5 space-y-4">
+          {/*<div className="rounded-xl bg-card border border-border/50 p-5 space-y-4">
             <h3 className="text-sm font-bold font-display text-foreground">Resale Settings</h3>
             <div className="space-y-3">
               <div className="flex items-center justify-between rounded-lg border border-border/50 px-4 py-3">
@@ -72,7 +72,7 @@ export default function VenueSettings() {
                 <Input defaultValue="5" className="w-16 h-8 text-center bg-muted/20 border-border/50 text-sm" />
               </div>
             </div>
-          </div>
+          </div>*/}
         </TabsContent>
 
         <TabsContent value="billing" className="space-y-4">

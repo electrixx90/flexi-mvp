@@ -88,7 +88,7 @@ export function MembershipCard({ membership: m }: Props) {
             </Button>
             {m.resellEligible && (
               <Button size="sm" variant="mint" className="flex-1 text-[13px]" asChild>
-                <Link to={`/sell?id=${m.id}`}>
+                <Link to={`/client/sell?id=${m.id}`}>
                   <Tag className="h-4 w-4" /> Sell
                 </Link>
               </Button>

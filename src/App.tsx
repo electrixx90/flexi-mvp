@@ -30,6 +30,7 @@ import LandingPage3 from "./pages/LandingPage3";
 import LandingPage4 from "./pages/LandingPage4";
 import JoinVenue from "./pages/JoinVenue";
 import Contact from "./pages/Contact";
+import LandingPage5 from "@/pages/LandingPage5.tsx";
 
 const queryClient = new QueryClient();
 
@@ -41,12 +42,10 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           {/* Landing page */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/landing-2" element={<LandingPage2 />} />
-          <Route path="/landing-3" element={<LandingPage3 />} />
-          <Route path="/landing-4" element={<LandingPage4 />} />
+          <Route path="/" element={<LandingPage4/>} />
           <Route path="/join" element={<JoinVenue />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/landing" element={<LandingPage5 />} />
 
           {/* Client area */}
           <Route element={<AppLayout />}>

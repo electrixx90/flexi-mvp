@@ -47,15 +47,13 @@ export function VenueSidebar({ collapsed, onToggle }: VenueSidebarProps) {
     >
       {/* Logo */}
       <div className="flex h-16 items-center px-4 gap-3 border-b border-border">
-        <img src={logoSymbol} alt="Flexi" className="h-9 w-9 shrink-0 object-contain" />
         {!collapsed && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-w-0">
-            <img src={logoRect} alt="Flexi" className="h-5 block" />
-            <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-widest">
-              Venue
-            </span>
-          </motion.div>
-        )}
+            <motion.div initial={{opacity: 0}} animate={{opacity: 1}} className="min-w-0">
+              <a href="/">
+                <img src={logoRect} alt="Flexi" className="h-8 block"/>
+              </a>
+            </motion.div>
+          )}
       </div>
 
       {/* Nav */}
