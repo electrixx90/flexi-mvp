@@ -1,19 +1,7 @@
-import express from "express";
-import path from "path";
-import { fileURLToPath } from "url";
+import { createApp } from "./server/app.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const app = express();
+const app = createApp();
 const port = process.env.PORT || 3033;
-const distPath = path.join(__dirname, "dist");
-
-app.use(express.static(distPath));
-
-app.get("/*path", (req, res) => {
-  res.sendFile(path.join(distPath, "index.html"));
-});
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Server running on port ${port}`);

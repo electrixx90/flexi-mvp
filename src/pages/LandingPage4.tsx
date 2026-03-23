@@ -513,6 +513,13 @@ export default function LandingPage4() {
       <footer className="bg-secondary py-12 border-t border-border/10">
         <div className="container mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-4">
           <img src={logoRect} alt="Flexi" className="h-7 brightness-0 invert" />
+
+          <a href="/client" className="text-sm text-primary-foreground/80">
+            {'>'} Client Dashboard
+          </a>
+          <a href="/venue" className="text-sm text-primary-foreground/80">
+            {'>'} Venue Dashboard
+          </a>
           <p className="text-sm text-primary-foreground/50">© {new Date().getFullYear()} Flexi. All rights reserved.</p>
         </div>
       </footer>
