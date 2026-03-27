@@ -44,7 +44,7 @@ export default function VenueBuilder() {
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm"><Eye className="h-4 w-4" /> Preview</Button>
-          <Button size="sm"><Save className="h-4 w-4" /> Publish</Button>
+          <Button size="sm" onClick={() => window.location.href = "/venues/:slug"}><Save className="h-4 w-4" /> Publish</Button>
         </div>
       </div>
 
