@@ -35,6 +35,8 @@ export default function VenueMemberships() {
   const [editOpen, setEditOpen] = useState(false);
   const [editingMembership, setEditingMembership] = useState<VenueMembership | null>(null);
   const [membershipType, setMembershipType] = useState("time-based");
+  const [createDialogContainer, setCreateDialogContainer] = useState<HTMLDivElement | null>(null);
+  const [editDialogContainer, setEditDialogContainer] = useState<HTMLDivElement | null>(null);
 
   const [newTitle, setNewTitle] = useState("");
   const [newDesc, setNewDesc] = useState("");
@@ -112,7 +114,7 @@ export default function VenueMemberships() {
           <DialogTrigger asChild>
             <Button size="sm"><Plus className="h-4 w-4" /> New Membership</Button>
           </DialogTrigger>
-          <DialogContent className="max-w-lg">
+          <DialogContent ref={setCreateDialogContainer} className="max-w-lg">
             <DialogHeader>
               <DialogTitle className="font-display">Create Membership</DialogTitle>
             </DialogHeader>
@@ -130,7 +132,7 @@ export default function VenueMemberships() {
                   <Label className="text-xs font-medium text-muted-foreground">Type</Label>
                   <Select value={membershipType} onValueChange={setMembershipType}>
                     <SelectTrigger className="bg-muted/20 border-border/50"><SelectValue /></SelectTrigger>
-                    <SelectContent>
+                    <SelectContent portalContainer={createDialogContainer}>
                       <SelectItem value="time-based">Time-based</SelectItem>
                       <SelectItem value="entries">Entry-based</SelectItem>
                     </SelectContent>
@@ -140,7 +142,7 @@ export default function VenueMemberships() {
                   <Label className="text-xs font-medium text-muted-foreground">Category</Label>
                   <Select value={newCategory} onValueChange={setNewCategory}>
                     <SelectTrigger className="bg-muted/20 border-border/50"><SelectValue /></SelectTrigger>
-                    <SelectContent>
+                    <SelectContent portalContainer={createDialogContainer}>
                       <SelectItem value="gym">Gym</SelectItem>
                       <SelectItem value="bjj">BJJ</SelectItem>
                       <SelectItem value="dance">Dance</SelectItem>
@@ -270,7 +272,7 @@ export default function VenueMemberships() {
 
       {/* Edit Dialog */}
       <Dialog open={editOpen} onOpenChange={(open) => { setEditOpen(open); if (!open) setEditingMembership(null); }}>
-        <DialogContent className="max-w-lg">
+        <DialogContent ref={setEditDialogContainer} className="max-w-lg">
           <DialogHeader>
             <DialogTitle className="font-display">Edit Membership</DialogTitle>
           </DialogHeader>
@@ -289,7 +291,7 @@ export default function VenueMemberships() {
                   <Label className="text-xs font-medium text-muted-foreground">Type</Label>
                   <Select value={editingMembership.type} onValueChange={v => setEditingMembership({ ...editingMembership, type: v as 'time-based' | 'entries' })}>
                     <SelectTrigger className="bg-muted/20 border-border/50"><SelectValue /></SelectTrigger>
-                    <SelectContent>
+                    <SelectContent portalContainer={editDialogContainer}>
                       <SelectItem value="time-based">Time-based</SelectItem>
                       <SelectItem value="entries">Entry-based</SelectItem>
                     </SelectContent>
@@ -299,7 +301,7 @@ export default function VenueMemberships() {
                   <Label className="text-xs font-medium text-muted-foreground">Status</Label>
                   <Select value={editingMembership.status} onValueChange={v => setEditingMembership({ ...editingMembership, status: v as 'active' | 'draft' | 'inactive' })}>
                     <SelectTrigger className="bg-muted/20 border-border/50"><SelectValue /></SelectTrigger>
-                    <SelectContent>
+                    <SelectContent portalContainer={editDialogContainer}>
                       <SelectItem value="active">Active</SelectItem>
                       <SelectItem value="draft">Draft</SelectItem>
                       <SelectItem value="inactive">Inactive</SelectItem>
