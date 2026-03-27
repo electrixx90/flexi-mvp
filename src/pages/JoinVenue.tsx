@@ -116,7 +116,7 @@ export default function JoinVenue() {
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Button variant="hero" size="lg" asChild>
-                  <Link to="/">Back to homepage</Link>
+                  <Link to="/venue">View Venue Dashboard</Link>
                 </Button>
                 <Button variant="outline" size="lg" asChild>
                   <Link to="/contact">Talk to our team</Link>
