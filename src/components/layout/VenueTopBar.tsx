@@ -1,7 +1,8 @@
-import { Search, Bell, ChevronDown, Menu } from "lucide-react";
+import { Search, ChevronDown, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useTurnstile } from "@/contexts/TurnstileContext";
+import { VenueNotificationsPopover } from "./VenueNotificationsPopover";
 
 interface VenueTopBarProps {
   onMobileMenuToggle: () => void;
@@ -46,10 +47,7 @@ export function VenueTopBar({ onMobileMenuToggle }: VenueTopBarProps) {
         <Badge variant="outline" className="text-[11px] px-2 py-0.5 border-accent/30 text-accent bg-accent/5 hidden sm:inline-flex">
           Business
         </Badge>
-        <Button variant="ghost" size="icon" className="relative h-8 w-8">
-          <Bell className="h-4 w-4" />
-          <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-destructive" />
-        </Button>
+        <VenueNotificationsPopover />
         <div className="flex items-center gap-2 rounded-lg px-2 py-1 hover:bg-muted/50 cursor-pointer transition-colors">
           <div className="h-7 w-7 rounded-lg bg-secondary flex items-center justify-center text-[11px] font-bold text-secondary-foreground">
             IT
