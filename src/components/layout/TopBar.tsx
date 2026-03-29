@@ -1,5 +1,6 @@
-import { Search, Bell, ChevronDown, Menu } from "lucide-react";
+import { Search, ChevronDown, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { NotificationsPopover } from "./NotificationsPopover";
 
 interface TopBarProps {
   onMobileMenuToggle: () => void;
@@ -29,10 +30,7 @@ export function TopBar({ onMobileMenuToggle }: TopBarProps) {
       </div>
 
       <div className="flex items-center gap-2">
-        <Button variant="ghost" size="icon" className="relative">
-          <Bell className="h-5 w-5" />
-          <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-accent" />
-        </Button>
+        <NotificationsPopover />
         <div className="flex items-center gap-2 rounded-xl px-2 py-1.5 hover:bg-muted/50 cursor-pointer transition-colors">
           <div className="h-8 w-8 rounded-full gradient-hero flex items-center justify-center text-xs font-bold text-primary-foreground">
             AK

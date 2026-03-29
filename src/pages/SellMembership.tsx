@@ -21,7 +21,7 @@ export default function SellMembership() {
 
   const maxPrice = selected ? Math.round(selected.residualValue * 0.95) : 0;
   const platformFee = price * 0.05;
-  const venueRoyalty = price * 0.05;
+  const venueRoyalty = price * 0.15;
   const payout = price - platformFee - venueRoyalty;
 
   // Initialize price when membership selected
@@ -152,7 +152,7 @@ export default function SellMembership() {
                 <span className="text-destructive/70">-€{platformFee.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Venue Royalty (5%)</span>
+                <span className="text-muted-foreground">Venue Royalty (15%)</span>
                 <span className="text-destructive/70">-€{venueRoyalty.toFixed(2)}</span>
               </div>
               <hr className="border-border" />
